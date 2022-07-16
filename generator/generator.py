@@ -1,3 +1,4 @@
+import os
 import random
 from data.data import Folder, File
 from faker import Faker
@@ -18,7 +19,7 @@ def generated_file_name():
 
 
 def generated_file():
-    path = rf'C:\Users\penko\PycharmProjects\simbirsoft_test\data\test_file_{random.randint(0, 999)}.txt'
+    path = rf"{os.path.split(os.environ['VIRTUAL_ENV'])[0]}\data\test_file_{random.randint(0, 999)}.txt"
     text = f'Hello World{random.randint(0, 999)}'
     file = open(path, 'w+')
     file.write(text)

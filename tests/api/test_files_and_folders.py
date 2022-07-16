@@ -1,4 +1,5 @@
 import json
+import os
 import allure
 import pytest
 import requests
@@ -12,7 +13,7 @@ from src.base_classes.response import Response
 @allure.epic('API Яндекс.Диск')
 @allure.story('Операции над файлами и папками')
 class TestOperationsOnFolders:
-    config_json = json.load(open(r"C:\Users\penko\PycharmProjects\yandex_disk\target.json"))
+    config_json = json.load(open(os.path.join(os.path.split(os.environ['VIRTUAL_ENV'])[0], 'target.json')))
     BASE_URL = config_json['api']['base_url']
     TOKEN = config_json['api']['token']
 
