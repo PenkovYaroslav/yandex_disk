@@ -21,6 +21,7 @@ class Disk():
         :param name: name folder or file
         :return:
         """
+        wd = self.app.wd
         type_dict = {'folder': LocatorsDisk.FOLDER_BUTTON,
                      'file': LocatorsDisk.FILE_BUTTON}
         self.app.element_is_visible(LocatorsDisk.CREATE_BUTTON).click()
@@ -29,17 +30,21 @@ class Disk():
         self.app.element_is_visible(LocatorsDisk.NAME_INPUT).send_keys(Keys.BACK_SPACE)
         self.app.element_is_visible(LocatorsDisk.NAME_INPUT).send_keys(name)
         self.app.element_is_visible(LocatorsDisk.SUBMIT_BUTTON).click()
+        if type == 'file':
+            wd.switch_to.window(wd.window_handles[len(wd.window_handles) - 1])
 
     @allure.step('Открываем папку/файл')
-    def open(self, name):
+    def open(self, type, name):
+        wd = self.app.wd
         self.app.double_click(self.app.element_is_visible(locator=(By.XPATH, f'//div[@aria-label="{name}"]')))
+        if type == 'file':
+            wd.switch_to.window(wd.window_handles[len(wd.window_handles) - 1])
 
     @allure.step('Закрываем файл')
     def file_close(self):
         wd = self.app.wd
-        wd.switch_to.window(wd.window_handles[2])
         wd.close()
-        wd.switch_to.window(wd.window_handles[1])
+        wd.switch_to.window(wd.window_handles[len(wd.window_handles) - 1])
 
     @allure.step('Получаем кол-во файлов в текущей папке')
     def get_count_files(self):
@@ -57,14 +62,12 @@ class Disk():
     def upload_file(self):
         file_name, path, text = generated_file()
         self.app.element_is_present(LocatorsDisk.UPLOAD_INPUT).send_keys(path)
-        time.sleep(3)
-        self.app.element_is_present(LocatorsDisk.UPLOAD_FILE_CLOSE_BUTTON).click()
+        self.app.element_is_visible(LocatorsDisk.UPLOAD_PROGRESS_TEXT, 10)
+        self.app.element_is_visible(LocatorsDisk.UPLOAD_FILE_CLOSE_BUTTON).click()
         os.remove(path)
         return file_name.split('\\')[-1], text
 
     @allure.step('Получеем текст документа')
     def get_text_file_txt(self):
-        wd = self.app.wd
-        wd.switch_to.window(wd.window_handles[2])
         element = self.app.element_is_visible(LocatorsDisk.TEXT_FILE)
         return element.text

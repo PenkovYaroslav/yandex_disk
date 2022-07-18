@@ -19,7 +19,7 @@ class TestOperationsOnFolders:
         file = next(generated_file_name())
         app.home.open_page('disk')
         app.disk.create('folder', folder.name)
-        app.disk.open(folder.name)
+        app.disk.open('folder', folder.name)
         current_count_files = app.disk.get_count_files()
         app.disk.create('file', file.name)
         app.disk.file_close()
@@ -38,10 +38,10 @@ class TestOperationsOnFolders:
         folder = next(generated_folder_name())
         app.home.open_page('disk')
         app.disk.create('folder', folder.name)
-        app.disk.open(folder.name)
+        app.disk.open('folder', folder.name)
         file_name, text = app.disk.upload_file()
-        app.disk.open(file_name)
+        app.disk.open('file', file_name)
         with allure.step('Проверяем текст в файле'):
-            allure.attach(app.wd.get_screenshot_as_png(), name='Text', attachment_type=AttachmentType.PNG)
             assert app.disk.get_text_file_txt() == text, 'Received file content is not as expected'
+            allure.attach(app.wd.get_screenshot_as_png(), name='Text', attachment_type=AttachmentType.PNG)
         app.disk.file_close()

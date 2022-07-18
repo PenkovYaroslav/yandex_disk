@@ -10,4 +10,5 @@ class LocatorsDisk:
     SUBMIT_BUTTON = (By.XPATH, '//div[@class="Modal-Content"]//button[contains(@class, "submit")]')
     FILES = (By.XPATH, '//div[@class="listing__items"]/div[@tabindex]//span')
     TEXT_FILE = (By.XPATH, '//p[@class="mg1"]')
+    UPLOAD_PROGRESS_TEXT = (By.XPATH, '//h3[@class="uploader-progress__progress-primary" and text()="Все файлы загружены"]')
     UPLOAD_FILE_CLOSE_BUTTON = (By.XPATH, '//button[@aria-label="Закрыть"]')
