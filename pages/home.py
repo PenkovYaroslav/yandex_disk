@@ -1,4 +1,3 @@
-import time
 import allure
 from selenium.common.exceptions import TimeoutException
 from locators.home import LocatorsHome
@@ -28,11 +27,10 @@ class Home():
         wd = self.app.wd
         if len(wd.window_handles) > 1:
             while len(wd.window_handles) != 1:
-                wd.switch_to.window(wd.window_handles[len(wd.window_handles)-1])
+                wd.switch_to.window(wd.window_handles[len(wd.window_handles) - 1])
                 wd.close()
         wd.switch_to.window(wd.window_handles[0])
         self.app.open_home_page()
-        time.sleep(1)
         if not self.is_logged_in():
             self.login(login, password)
 
@@ -51,5 +49,4 @@ class Home():
         pages_dict = {'disk': LocatorsHome.DISK_BUTTON,
                       'email': LocatorsHome.EMAIL_BUTTON}
         self.app.element_is_visible(pages_dict[page]).click()
-        wd.switch_to.window(wd.window_handles[len(wd.window_handles)-1])
-        time.sleep(1)
+        wd.switch_to.window(wd.window_handles[len(wd.window_handles) - 1])
