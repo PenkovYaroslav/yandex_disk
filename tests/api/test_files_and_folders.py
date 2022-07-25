@@ -33,7 +33,7 @@ class TestOperationsOnFolders:
             resp_check_folder = requests.get(url=resp_folder_create.json()['href'], headers=headers)
             assert folder.name == resp_check_folder.json()['name'], 'Recieved name is not equal to expected'
         with allure.step('Удаляем созданную папку'):
-            requests.delete(url=f'https://cloud-api.yandex.net/v1/disk/resources?path=%2F{folder.name}',
+            requests.delete(url=f'{self.BASE_URL}/disk/resources?path=%2F{folder.name}',
                             headers=headers)
 
     @allure.testcase('https://...')

@@ -129,3 +129,4 @@ dmypy.json
 .pyre/
 /target.json
 /allure-result/
+/file.py
